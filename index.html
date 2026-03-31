@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<title>单十字轴万向节运动特性分析工具</title>
+<style>
+:root{
+  --bg:#0d1117;--bg2:#161b22;--bg3:#1c2330;
+  --bd:rgba(255,255,255,0.08);--bd2:rgba(255,255,255,0.15);
+  --t1:#e6edf3;--t2:#8b949e;--t3:#6e7681;
+  --blue:#58a6ff;--blue2:#1f6feb;
+  --green:#3fb950;--amber:#d29922;--red:#f85149;--purp:#bc8cff;--teal:#39c5cf;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--t1);font-family:"Microsoft YaHei","PingFang SC",sans-serif;font-size:13px;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+
+/* ── header ── */
+.hdr{background:var(--bg2);border-bottom:1px solid var(--bd);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;flex-shrink:0}
+.hdr-l{display:flex;align-items:center;gap:11px}
+.hdr-ico{width:34px;height:34px;background:linear-gradient(135deg,#1f6feb,#388bfd);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hdr-ico svg{width:18px;height:18px}
+.hdr-title{font-size:14px;font-weight:700}
+.hdr-sub{font-size:10px;color:var(--t2);margin-top:1px}
+.badge{font-size:10px;color:var(--blue);background:rgba(88,166,255,.1);border:1px solid rgba(88,166,255,.25);border-radius:5px;padding:3px 9px;font-family:monospace;white-space:nowrap}
+
+/* ── layout ── */
+.wrap{display:flex;flex:1;overflow:hidden;min-height:0}
+
+/* ── sidebar ── */
+.side{width:252px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--bd);padding:14px 13px;display:flex;flex-direction:column;gap:14px;overflow-y:auto}
+.stl{font-size:10px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px}
+
+/* 大数字 */
+.abox{text-align:center;padding:12px 8px 9px;background:var(--bg3);border:1px solid var(--bd);border-radius:9px;margin-bottom:10px}
+.anum{font-family:monospace;font-size:44px;font-weight:500;color:var(--blue);line-height:1}
+.aunit{font-size:17px;color:var(--t2);margin-left:2px}
+.albl{font-size:11px;color:var(--t2);margin-top:3px}
+
+input[type=range]{-webkit-appearance:none;width:100%;height:4px;border-radius:2px;background:var(--bd2);outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:17px;height:17px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 3px rgba(88,166,255,.2);cursor:pointer}
+.ticks{display:flex;justify-content:space-between;margin-top:5px;font-family:monospace;font-size:9px;color:var(--t3)}
+
+/* 预设 */
+.pg{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.pbtn{background:var(--bg3);border:1px solid var(--bd);border-radius:6px;padding:5px 2px;color:var(--t2);font-family:monospace;font-size:11px;cursor:pointer;text-align:center;transition:.13s;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.pbtn:hover{border-color:var(--bd2);color:var(--t1);background:#2d333b}
+.pbtn.on{border-color:var(--blue2);color:var(--blue);background:rgba(31,111,235,.15)}
+
+/* 参考线 */
+.rlist{display:flex;flex-direction:column;gap:4px}
+.ritem{display:flex;align-items:center;gap:7px;padding:6px 9px;background:var(--bg3);border:1px solid var(--bd);border-radius:6px;cursor:pointer;transition:.13s;user-select:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.ritem:hover{border-color:var(--bd2)}
+.ritem.on{background:#1c2330;border-color:var(--bd2)}
+.rsw{width:20px;height:3px;border-radius:2px;flex-shrink:0}
+.rlbl{font-family:monospace;font-size:11px;color:var(--t2);flex:1}
+.ritem.on .rlbl{color:var(--t1)}
+.rtog{width:12px;height:12px;border-radius:50%;border:1.5px solid var(--t3);flex-shrink:0;position:relative;transition:.13s}
+.ritem.on .rtog{background:var(--blue);border-color:var(--blue)}
+.ritem.on .rtog::after{content:'';position:absolute;width:4px;height:4px;background:#fff;border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%)}
+
+/* 统计卡片 */
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.sc{background:var(--bg3);border:1px solid var(--bd);border-radius:7px;padding:7px 9px}
+.sc.full{grid-column:1/-1}
+.scn{font-size:9px;color:var(--t3);line-height:1.5;margin-bottom:2px}
+.scv{font-family:monospace;font-size:14px;font-weight:500;color:var(--t1)}
+.scv.hi{color:var(--blue)}.scv.ok{color:var(--green)}.scv.warn{color:var(--amber)}.scv.danger{color:var(--red)}
+.scu{font-size:10px;color:var(--t2);margin-left:1px}
+
+/* 公式框 */
+.fbox{background:var(--bg3);border:1px solid var(--bd);border-left:3px solid var(--blue2);border-radius:0 7px 7px 0;padding:9px 11px;font-family:monospace;font-size:11px;color:var(--t2);line-height:2}
+.fh{color:var(--blue)}.fd{font-size:9px;color:var(--t3)}
+
+/* ── 图表区 ── */
+.charts{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+.cpanel{flex:1;display:flex;flex-direction:column;border-bottom:1px solid var(--bd);padding:14px 20px 10px;min-height:0;position:relative}
+.cpanel:last-child{border-bottom:none}
+.cp-head{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:8px;flex-shrink:0}
+.cp-title{font-size:13px;font-weight:700;color:var(--t1)}
+.cp-desc{font-size:11px;color:var(--t2);margin-top:2px;line-height:1.5}
+.leg-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.litem{display:flex;align-items:center;gap:5px;font-family:monospace;font-size:11px;color:var(--t2);white-space:nowrap}
+.lline{display:inline-block;width:20px;height:2px;border-radius:1px;vertical-align:middle}
+.cw{flex:1;position:relative;min-height:0}
+canvas.cc{display:block;width:100%;height:100%}
+
+/* tooltip */
+.tt{position:absolute;background:#1c2330;border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:7px 11px;pointer-events:none;font-family:monospace;font-size:11px;color:var(--t1);display:none;z-index:20;min-width:165px;line-height:1.9}
+.tt-hd{font-size:10px;color:var(--t2);margin-bottom:3px;border-bottom:1px solid rgba(255,255,255,.07);padding-bottom:3px}
+.trow{display:flex;align-items:center;gap:5px}
+.tdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+
+/* ── 移动端响应式 ── */
+@media(max-width:860px){
+  html,body{height:auto;overflow:auto}
+  body{display:block}
+  .wrap{display:block;overflow:visible;height:auto}
+  .side{width:100%;border-right:none;border-bottom:1px solid var(--bd);flex-direction:row;flex-wrap:wrap;gap:10px;padding:12px}
+  .side > div{flex:1 1 160px;min-width:140px}
+  .charts{display:block;height:auto}
+  .cpanel{height:300px;border-bottom:1px solid var(--bd)}
+  .cpanel:last-child{border-bottom:none}
+  .hdr-title{font-size:13px}
+  .hdr-sub{font-size:9px}
+  .anum{font-size:34px}
+  .pg{grid-template-columns:repeat(4,1fr)}
+}
+@media(max-width:500px){
+  .hdr{padding:8px 12px}
+  .hdr-title{font-size:12px}
+  .badge{display:none}
+  .side{padding:10px;gap:8px}
+  .side > div{flex:1 1 100%}
+  .cpanel{height:260px}
+  .sg{grid-template-columns:1fr 1fr}
+  input[type=range]::-webkit-slider-thumb{width:22px;height:22px}
+  .pbtn{padding:8px 2px;font-size:12px}
+}
+user-select: none
+</style>
+</head>
+<body>
+
+<!-- header -->
+<div class="hdr">
+  <div class="hdr-l">
+    <div class="hdr-ico">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="3"/>
+        <line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/>
+        <line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/>
+        <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/>
+        <line x1="4.93" y1="19.07" x2="7.76" y2="16.24"/><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"/>
+      </svg>
+    </div>
+    <div>
+      <div class="hdr-title">单十字轴万向节运动特性分析工具</div>
+      <div class="hdr-sub">《汽车设计》第5版 · 第四章 4.3节 · 教材式(4-1)(4-3) · 转角范围 0°~720°（两圈）</div>
+    </div>
+  </div>
+  <div class="badge">完全离线 · 零依赖 · 浏览器运行</div>
+</div>
+
+<!-- wrap -->
+<div class="wrap">
+
+  <!-- sidebar -->
+  <div class="side">
+
+    <div>
+      <div class="stl">万向节夹角 α</div>
+      <div class="abox">
+        <div><span class="anum" id="an">15</span><span class="aunit">°</span></div>
+        <div class="albl">α（主从动轴夹角）</div>
+      </div>
+      <input type="range" id="sl" min="0" max="35" step="1" value="15">
+      <div class="ticks">
+        <span>0°</span><span>5°</span><span>10°</span><span>15°</span><span>20°</span><span>25°</span><span>30°</span><span>35°</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="stl">快速预设</div>
+      <div class="pg" id="pg">
+        <button class="pbtn" data-v="0">0°</button>
+        <button class="pbtn" data-v="5">5°</button>
+        <button class="pbtn" data-v="8">8°</button>
+        <button class="pbtn" data-v="10">10°</button>
+        <button class="pbtn" data-v="18">18°</button>
+        <button class="pbtn on" data-v="15">15°</button>
+        <button class="pbtn" data-v="25">25°</button>
+        <button class="pbtn" data-v="31">31°</button>
+      </div>
+    </div>
+
+    <div>
+      <div class="stl">叠加参考曲线</div>
+      <div class="rlist" id="rl">
+        <div class="ritem on" data-a="5" >
+          <div class="rsw" style="background:#3fb950"></div><span class="rlbl">α = 5°</span><div class="rtog"></div>
+        </div>
+        <div class="ritem on" data-a="10">
+          <div class="rsw" style="background:#d29922"></div><span class="rlbl">α = 10°</span><div class="rtog"></div>
+        </div>
+        <div class="ritem on" data-a="18">
+          <div class="rsw" style="background:#39c5cf"></div><span class="rlbl">α = 18°（设计位置）</span><div class="rtog"></div>
+        </div>
+        <div class="ritem on" data-a="31">
+          <div class="rsw" style="background:#f85149"></div><span class="rlbl">α = 31°（最大跳动）</span><div class="rtog"></div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="stl">实时统计（当前夹角）</div>
+      <div class="sg">
+        <div class="sc full">
+          <div class="scn">不均匀系数 K = sinα·tanα（式4-2）</div>
+          <div><span class="scv warn" id="sv-k">—</span></div>
+        </div>
+        <div class="sc">
+          <div class="scn">ω₂/ω₁ 最大值<br>φ₁=90°处</div>
+          <div><span class="scv hi" id="sv-wmax">—</span></div>
+        </div>
+        <div class="sc">
+          <div class="scn">ω₂/ω₁ 最小值<br>φ₁=0°处</div>
+          <div><span class="scv hi" id="sv-wmin">—</span></div>
+        </div>
+        <div class="sc">
+          <div class="scn">T₂/T₁ 最大值<br>φ₁=90°处</div>
+          <div><span class="scv hi" id="sv-tmax">—</span></div>
+        </div>
+        <div class="sc">
+          <div class="scn">T₂/T₁ 最小值<br>φ₁=0°处</div>
+          <div><span class="scv hi" id="sv-tmin">—</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="stl">核心公式（教材式4-1/4-3）</div>
+      <div class="fbox">
+        <div><span class="fh">ω₂/ω₁</span> = cosα/(1−sin²α·sin²φ₁)</div>
+        <div><span class="fd">对应MATLAB：cosd(b)./(1−sind(b).²·sind(a).²)</span></div>
+        <div><span class="fh">T₂/T₁</span> = (1−sin²α·sin²φ₁)/cosα</div>
+        <div><span class="fd">对应MATLAB：(1−sind(b).²·sind(a).²)./cosd(b)</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 三图 -->
+  <div class="charts">
+
+    <!-- 图1: ω₂/ω₁ -->
+    <div class="cpanel">
+      <div class="cp-head">
+        <div>
+          <div class="cp-title">① 转速比 ω₂/ω₁ — 主动轴转角 φ₁（教材式4-1）</div>
+          <div class="cp-desc">＞1：从动轴快&emsp;＜1：从动轴慢&emsp;=1（虚线）：瞬时等速</div>
+        </div>
+        <div class="leg-row" id="leg0"></div>
+      </div>
+      <div class="cw" id="cw0"><canvas class="cc" id="c0"></canvas><div class="tt" id="tt0"></div></div>
+    </div>
+
+    <!-- 图2: T₂/T₁ -->
+    <div class="cpanel">
+      <div class="cp-head">
+        <div>
+          <div class="cp-title">② 转矩比 T₂/T₁ — 主动轴转角 φ₁（教材式4-3）</div>
+          <div class="cp-desc">T₂/T₁ 与 ω₂/ω₁ 互为倒数（功率守恒 T₁ω₁=T₂ω₂）</div>
+        </div>
+        <div class="leg-row" id="leg1"></div>
+      </div>
+      <div class="cw" id="cw1"><canvas class="cc" id="c1"></canvas><div class="tt" id="tt1"></div></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════
+// 常量
+// ════════════════════════════════════════
+const PI = Math.PI, D2R = PI/180;
+const XMAX = 720;        // 0~720°（两圈）
+const STEP = 0.5;        // 每0.5°一个点，共1441点
+const NPT  = Math.round(XMAX/STEP)+1;
+
+const REF_ANGLES = [5, 10, 18, 31];
+const REF_COLORS = ['#3fb950','#d29922','#39c5cf','#f85149'];
+const CUR_COLOR  = '#58a6ff';
+const GRID_C     = 'rgba(255,255,255,0.055)';
+const AXIS_C     = '#6e7681';
+const TICK_C     = '#8b949e';
+const ZERO_C     = 'rgba(255,255,255,0.20)';
+const DPR        = window.devicePixelRatio || 1;
+
+let curAlpha   = 15;
+let refVisible = [true, true, true, true];
+
+// ════════════════════════════════════════
+// 核心计算（严格按MATLAB公式）
+// ════════════════════════════════════════
+// MATLAB原码：
+//   c = cosd(b)./(1-sind(b).^2.*sind(a).^2)   → ω₂/ω₁，注意是 sind(a)即sin(φ₁)
+//   d = (1-sind(b).^2.*sind(a).^2)./cosd(b)   → T₂/T₁
+//   a = 0:0.01:720 为主动叉转角（度）
+
+function computeSeries(alphaDeg) {
+  const cosA = Math.cos(alphaDeg*D2R);
+  const sinA = Math.sin(alphaDeg*D2R);
+  const sin2A = sinA*sinA;
+
+  const xs=new Float32Array(NPT), yw=new Float32Array(NPT),
+        yt=new Float32Array(NPT);
+
+  for(let i=0;i<NPT;i++){
+    const phi1d = i*STEP;
+    const phi1  = phi1d*D2R;
+    const sinPhi1 = Math.sin(phi1);
+    const sin2phi1 = sinPhi1*sinPhi1;
+
+    xs[i]  = phi1d;
+    yw[i]  = cosA / (1 - sin2A*sin2phi1);
+    yt[i]  = (1 - sin2A*sin2phi1) / cosA;
+  }
+  return {xs,yw,yt};
+}
+
+// 预计算所有参考系列（只算一次）
+const refSeries = REF_ANGLES.map(a => computeSeries(a));
+let   curSeries = computeSeries(curAlpha);
+
+// ════════════════════════════════════════
+// Canvas 图表引擎
+// ════════════════════════════════════════
+const CHARTS = [
+  { id:'c0', wid:'cw0', ttid:'tt0', legid:'leg0', key:'yw',
+    ylabel:'ω₂/ω₁',
+    yfmt: v=>v.toFixed(5)
+  },
+  { id:'c1', wid:'cw1', ttid:'tt1', legid:'leg1', key:'yt',
+    ylabel:'T₂/T₁',
+    yfmt: v=>v.toFixed(5)
+  },
+];
+
+// ── Y轴范围：覆盖所有可见系列的实际数据范围，加10%余量，nice刻度
+function yRange(ci){
+  const cfg=CHARTS[ci];
+  let lo=Infinity, hi=-Infinity;
+  // 当前曲线
+  curSeries[cfg.key].forEach(v=>{ if(v<lo)lo=v; if(v>hi)hi=v; });
+  // 可见参考线
+  REF_ANGLES.forEach((_,i)=>{
+    if(!refVisible[i]) return;
+    refSeries[i][cfg.key].forEach(v=>{ if(v<lo)lo=v; if(v>hi)hi=v; });
+  });
+  if(lo===hi){ lo-=0.05; hi+=0.05; }
+  const span=hi-lo;
+  lo -= span*0.08; hi += span*0.08;
+  // nice 对齐到整数或0.1步
+  const step = span>0.5 ? 0.1 : 0.02;
+  lo = Math.floor(lo/step)*step;
+  hi = Math.ceil(hi/step)*step;
+  return {lo,hi};
+}
+
+// 绘制单张图
+function drawChart(ci, alpha){
+  const cfg =CHARTS[ci];
+  const wrap=document.getElementById(cfg.wid);
+  const cv  =document.getElementById(cfg.id);
+  const W   =wrap.clientWidth, H=wrap.clientHeight;
+  if(W<=0||H<=0) return;
+
+  cv.width=W*DPR; cv.height=H*DPR;
+  cv.style.width=W+'px'; cv.style.height=H+'px';
+  const ctx=cv.getContext('2d');
+  ctx.scale(DPR,DPR);
+
+  const ml=66, mr=20, mt=18, mb=44;
+  const pw=W-ml-mr, ph=H-mt-mb;
+
+  const {lo:ymin, hi:ymax} = yRange(ci);
+  const xmin=0, xmax=XMAX;
+  const yspan=ymax-ymin;
+
+  function px(x){ return ml+(x-xmin)/(xmax-xmin)*pw; }
+  function py(y){ return mt+(1-(y-ymin)/yspan)*ph; }
+
+  ctx.clearRect(0,0,W,H);
+
+  // ── 绘图区背景（深一点）
+  ctx.fillStyle='rgba(0,0,0,0.18)';
+  ctx.fillRect(ml,mt,pw,ph);
+
+  // ── 垂直网格（每90°细线，每360°稍亮）
+  for(let x=0;x<=720;x+=90){
+    const cx=px(x);
+    const is360 = x%360===0;
+    ctx.strokeStyle = is360 ? 'rgba(255,255,255,0.12)' : GRID_C;
+    ctx.lineWidth   = is360 ? 1 : 0.7;
+    ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(cx,mt); ctx.lineTo(cx,mt+ph); ctx.stroke();
+  }
+
+  // ── 水平网格（8等分）
+  const YTICKS=8;
+  const yStep=yspan/YTICKS;
+  for(let i=0;i<=YTICKS;i++){
+    const y=ymin+i*yStep, cy=py(y);
+    const isOne = Math.abs(y-1)<yStep*0.08;  // y≈1 的线
+    ctx.strokeStyle = isOne ? 'rgba(255,255,255,0.22)' : GRID_C;
+    ctx.lineWidth   = isOne ? 1 : 0.7;
+    ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(ml,cy); ctx.lineTo(ml+pw,cy); ctx.stroke();
+  }
+
+  // ── y=1 醒目参考线
+  const cy1=py(1);
+  if(cy1>=mt-1 && cy1<=mt+ph+1){
+    ctx.strokeStyle='rgba(255,255,255,0.35)';
+    ctx.lineWidth=1.2; ctx.setLineDash([6,4]);
+    ctx.beginPath(); ctx.moveTo(ml,cy1); ctx.lineTo(ml+pw,cy1); ctx.stroke();
+    ctx.setLineDash([]);
+    // 标注"=1"
+    ctx.fillStyle='rgba(255,255,255,0.45)';
+    ctx.font='10px monospace'; ctx.textAlign='left';
+    ctx.fillText('= 1', ml+4, cy1-4);
+  }
+
+  // ── 参考曲线（虚线，稍细）
+  REF_ANGLES.forEach((a,i)=>{
+    if(!refVisible[i]) return;
+    const ser=refSeries[i], ys=ser[cfg.key];
+    ctx.strokeStyle=REF_COLORS[i]; ctx.lineWidth=1.4;
+    ctx.setLineDash([7,4]); ctx.globalAlpha=0.72;
+    ctx.beginPath();
+    for(let j=0;j<NPT;j++){
+      const cx=px(ser.xs[j]), cy=py(ys[j]);
+      j===0?ctx.moveTo(cx,cy):ctx.lineTo(cx,cy);
+    }
+    ctx.stroke();
+    ctx.setLineDash([]); ctx.globalAlpha=1;
+  });
+
+  // ── 当前曲线（实线，粗，带发光）
+  {
+    const ser=curSeries, ys=ser[cfg.key];
+    // 发光底层
+    ctx.strokeStyle=CUR_COLOR; ctx.lineWidth=5;
+    ctx.globalAlpha=0.15; ctx.setLineDash([]);
+    ctx.beginPath();
+    for(let j=0;j<NPT;j++){
+      const cx=px(ser.xs[j]), cy=py(ys[j]);
+      j===0?ctx.moveTo(cx,cy):ctx.lineTo(cx,cy);
+    }
+    ctx.stroke();
+    // 实线
+    ctx.globalAlpha=1; ctx.lineWidth=2.4;
+    ctx.beginPath();
+    for(let j=0;j<NPT;j++){
+      const cx=px(ser.xs[j]), cy=py(ys[j]);
+      j===0?ctx.moveTo(cx,cy):ctx.lineTo(cx,cy);
+    }
+    ctx.stroke();
+
+    // ── 峰值标注点（每90°处，即最大/最小值位置）
+    const annotXs=[90,270,450,630];  // ω₂/ω₁最大值在φ1=90°处
+    annotXs.forEach(xd=>{
+      const idx=Math.round(xd/STEP);
+      const yv=ys[idx];
+      const cx=px(xd), cy=py(yv);
+      // 小圆点
+      ctx.fillStyle='#ffffff'; ctx.globalAlpha=0.9;
+      ctx.beginPath(); ctx.arc(cx,cy,3.5,0,2*PI); ctx.fill();
+      ctx.globalAlpha=1;
+      // 数值标签
+      ctx.fillStyle=CUR_COLOR;
+      ctx.font='bold 11px monospace'; ctx.textAlign='center';
+      const label=yv.toFixed(3);
+      const above=(cy-mt)>20;
+      ctx.fillText(label, cx, cy+(above?-7:14));
+    });
+  }
+
+  // ── 轴线（稍亮）
+  ctx.strokeStyle='rgba(255,255,255,0.22)'; ctx.lineWidth=1;
+  ctx.beginPath();
+  ctx.moveTo(ml,mt); ctx.lineTo(ml,mt+ph);        // Y轴
+  ctx.moveTo(ml,mt+ph); ctx.lineTo(ml+pw,mt+ph);  // X轴底
+  ctx.stroke();
+
+  // ── X轴刻度与标签
+  ctx.fillStyle=TICK_C; ctx.font='11px monospace'; ctx.textAlign='center';
+  [0,90,180,270,360,450,540,630,720].forEach(x=>{
+    const cx=px(x);
+    ctx.strokeStyle='rgba(255,255,255,0.25)'; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(cx,mt+ph); ctx.lineTo(cx,mt+ph+5); ctx.stroke();
+    ctx.fillStyle=TICK_C;
+    ctx.fillText(x+'°', cx, mt+ph+17);
+  });
+  // 360°/720° 特殊标注（第一圈/第二圈）
+  ctx.fillStyle='rgba(255,255,255,0.28)'; ctx.font='9px monospace';
+  ctx.fillText('第一圈', px(180), mt+ph+30);
+  ctx.fillText('第二圈', px(540), mt+ph+30);
+
+  // ── Y轴刻度与标签（8等分）
+  ctx.textAlign='right';
+  for(let i=0;i<=YTICKS;i++){
+    const y=ymin+i*yStep, cy=py(y);
+    if(cy<mt-1||cy>mt+ph+1) continue;
+    ctx.strokeStyle='rgba(255,255,255,0.22)'; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(ml-5,cy); ctx.lineTo(ml,cy); ctx.stroke();
+    ctx.fillStyle=TICK_C; ctx.font='11px monospace';
+    ctx.fillText(y.toFixed(3), ml-8, cy+4);
+  }
+
+  // ── 轴标题
+  ctx.fillStyle='rgba(255,255,255,0.55)'; ctx.textAlign='center';
+  ctx.font='12px "Microsoft YaHei",sans-serif';
+  ctx.fillText('主动轴转角  φ₁ / °', ml+pw/2, H-6);
+  ctx.save(); ctx.translate(14, mt+ph/2); ctx.rotate(-PI/2);
+  ctx.fillText(cfg.ylabel, 0, 0); ctx.restore();
+
+  // 存储映射信息（供tooltip用）
+  cv._map={ml,mr,mt,mb,pw,ph,px,py,xmin,xmax,ymin,ymax,W,H,key:cfg.key};
+}
+
+// 绘制所有图
+function drawAll(){
+  for(let i=0;i<2;i++) drawChart(i, curAlpha);
+}
+
+// ════════════════════════════════════════
+// 图例
+// ════════════════════════════════════════
+function buildLegend(ci, alpha){
+  const el=document.getElementById(CHARTS[ci].legid);
+  const dashStyle=(c)=>`background:repeating-linear-gradient(90deg,${c} 0,${c} 4px,transparent 4px,transparent 7px)`;
+  let html=`<div class="litem"><span class="lline" style="background:${CUR_COLOR};height:3px"></span>α = ${alpha}°（当前）</div>`;
+  REF_ANGLES.forEach((a,i)=>{
+    if(!refVisible[i]) return;
+    html+=`<div class="litem"><span class="lline" style="${dashStyle(REF_COLORS[i])};height:2px"></span>α = ${a}°</div>`;
+  });
+  el.innerHTML=html;
+}
+function buildAllLegends(alpha){ for(let i=0;i<2;i++) buildLegend(i,alpha); }
+
+// ════════════════════════════════════════
+// 统计
+// ════════════════════════════════════════
+function updateStats(alpha){
+  const a=alpha*D2R;
+  const cosA=Math.cos(a), sinA=Math.sin(a);
+  const K    = sinA*Math.tan(a);
+  const wMax = cosA===0 ? 9999 : cosA/(1-sinA*sinA);  // φ₁=90°
+  const wMin = cosA;                                    // φ₁=0°
+  const tMax = cosA===0 ? 9999 : 1/cosA;               // φ₁=90°
+  const tMin = cosA;                                    // φ₁=0°
+
+  const kEl=document.getElementById('sv-k');
+  kEl.textContent=K.toFixed(5);
+  kEl.className='scv '+(K<0.02?'ok':K<0.05?'warn':'danger');
+
+  document.getElementById('sv-wmax').textContent=wMax.toFixed(5);
+  document.getElementById('sv-wmin').textContent=wMin.toFixed(5);
+  document.getElementById('sv-tmax').textContent=tMax.toFixed(5);
+  document.getElementById('sv-tmin').textContent=tMin.toFixed(5);
+}
+
+// ════════════════════════════════════════
+// Tooltip（悬停读值）
+// ════════════════════════════════════════
+function setupTooltip(ci){
+  const cfg=CHARTS[ci];
+  const cv =document.getElementById(cfg.id);
+  const tt =document.getElementById(cfg.ttid);
+  const wrap=document.getElementById(cfg.wid);
+
+  function getVal(ser, x01){
+    const idx=Math.round(x01*(NPT-1));
+    const i=Math.max(0,Math.min(NPT-1,idx));
+    return ser[cfg.key][i];
+  }
+
+  cv.addEventListener('mousemove',e=>{
+    const m=cv._map; if(!m) return;
+    const rect=cv.getBoundingClientRect();
+    const mx=e.clientX-rect.left, my=e.clientY-rect.top;
+    if(mx<m.ml||mx>m.ml+m.pw||my<m.mt||my>m.mt+m.ph){ tt.style.display='none'; return; }
+    const x01=(mx-m.ml)/m.pw;
+    const xVal=x01*(m.xmax-m.xmin)+m.xmin;
+
+    let html=`<div class="tt-hd">φ₁ = ${xVal.toFixed(1)}°</div>`;
+    const yCur=getVal(curSeries,x01);
+    html+=`<div class="trow"><div class="tdot" style="background:${CUR_COLOR}"></div>α = ${curAlpha}°：<b>${cfg.yfmt(yCur)}</b></div>`;
+    REF_ANGLES.forEach((a,i)=>{
+      if(!refVisible[i]) return;
+      const y=getVal(refSeries[i],x01);
+      html+=`<div class="trow"><div class="tdot" style="background:${REF_COLORS[i]}"></div>α = ${a}°：${cfg.yfmt(y)}</div>`;
+    });
+    tt.innerHTML=html;
+
+    const wRect=wrap.getBoundingClientRect();
+    const tx=e.clientX-wRect.left+12, ty=e.clientY-wRect.top-40;
+    const ttW=180;
+    tt.style.left=(tx+ttW>wRect.width-10?tx-ttW-18:tx)+'px';
+    tt.style.top=Math.max(2,ty)+'px';
+    tt.style.display='block';
+  });
+  cv.addEventListener('mouseleave',()=>{ tt.style.display='none'; });
+}
+
+// ════════════════════════════════════════
+// 主更新
+// ════════════════════════════════════════
+function update(alpha){
+  curAlpha=alpha;
+  curSeries=computeSeries(alpha);
+  document.getElementById('an').textContent=alpha;
+  document.getElementById('sl').value=alpha;
+  document.querySelectorAll('.pbtn').forEach(b=>b.classList.toggle('on',+b.dataset.v===alpha));
+  updateStats(alpha);
+  buildAllLegends(alpha);
+  drawAll();
+}
+
+// ════════════════════════════════════════
+// 事件
+// ════════════════════════════════════════
+document.getElementById('sl').addEventListener('input',e=>update(+e.target.value));
+document.getElementById('pg').addEventListener('click',e=>{
+  const b=e.target.closest('.pbtn'); if(b) update(+b.dataset.v);
+});
+document.getElementById('rl').addEventListener('click',e=>{
+  const item=e.target.closest('.ritem'); if(!item) return;
+  const idx=REF_ANGLES.indexOf(+item.dataset.a); if(idx<0) return;
+  refVisible[idx]=!refVisible[idx];
+  item.classList.toggle('on',refVisible[idx]);
+  buildAllLegends(curAlpha); drawAll();
+});
+window.addEventListener('resize',()=>{ drawAll(); });
+
+// ════════════════════════════════════════
+// 初始化
+// ════════════════════════════════════════
+for(let i=0;i<2;i++) setupTooltip(i);
+// 等DOM渲染完成再绘图
+requestAnimationFrame(()=>{
+  requestAnimationFrame(()=>{
+    update(15);
+  });
+});
+</script>
+<script>
+// 阻止双击缩放（移动端兼容优化）
+let lastTouchEnd = 0;
+document.addEventListener('touchend', function(e) {
+  const now = Date.now();
+  if (now - lastTouchEnd <= 300) {
+    e.preventDefault();
+  }
+  lastTouchEnd = now;
+}, false);
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener('keydown', e => {
+if (e.key === 'F12' || 
+(e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
+(e.ctrlKey && e.key === 'U') ||
+(e.ctrlKey && e.key === 'S')) {
+e.preventDefault();
+return false;
+}
+});
+
+</script>
+<script>
+  document.addEventListener('contextmenu', e => e.preventDefault());
+  document.addEventListener('keydown', e => {
+    if (e.key === 'F12' || 
+        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
+        (e.ctrlKey && e.key === 'U') ||
+        (e.ctrlKey && e.key === 'S')) {
+      e.preventDefault();
+      return false;
+    }
+  });
+</script>
+
+</body>
+</html>
