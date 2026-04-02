@@ -16,81 +16,91 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden}
-body{background:var(--bg);color:var(--t1);font-family:"Microsoft YaHei","PingFang SC",sans-serif;font-size:13px;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--t1);font-family:"Microsoft YaHei","PingFang SC",sans-serif;font-size:16px;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
 
 /* ── header ── */
 .hdr{background:var(--bg2);border-bottom:1px solid var(--bd);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;flex-shrink:0}
 .hdr-l{display:flex;align-items:center;gap:11px}
 .hdr-ico{width:34px;height:34px;background:linear-gradient(135deg,#1f6feb,#388bfd);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .hdr-ico svg{width:18px;height:18px}
-.hdr-title{font-size:14px;font-weight:700}
-.hdr-sub{font-size:10px;color:var(--t2);margin-top:1px}
-.badge{font-size:10px;color:var(--blue);background:rgba(88,166,255,.1);border:1px solid rgba(88,166,255,.25);border-radius:5px;padding:3px 9px;font-family:monospace;white-space:nowrap}
+.hdr-title{font-size:18px;font-weight:700}
+.hdr-sub{font-size:13px;color:var(--t2);margin-top:1px}
+.badge{font-size:13px;color:var(--blue);background:rgba(88,166,255,.1);border:1px solid rgba(88,166,255,.25);border-radius:5px;padding:3px 9px;font-family:monospace;white-space:nowrap}
 
 /* ── layout ── */
 .wrap{display:flex;flex:1;overflow:hidden;min-height:0}
 
 /* ── sidebar ── */
 .side{width:252px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--bd);padding:14px 13px;display:flex;flex-direction:column;gap:14px;overflow-y:auto}
-.stl{font-size:10px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px}
+.stl{font-size:13px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px}
 
 /* 大数字 */
 .abox{text-align:center;padding:12px 8px 9px;background:var(--bg3);border:1px solid var(--bd);border-radius:9px;margin-bottom:10px}
-.anum{font-family:monospace;font-size:44px;font-weight:500;color:var(--blue);line-height:1}
-.aunit{font-size:17px;color:var(--t2);margin-left:2px}
-.albl{font-size:11px;color:var(--t2);margin-top:3px}
+.anum{font-family:monospace;font-size:54px;font-weight:500;color:var(--blue);line-height:1}
+.aunit{font-size:22px;color:var(--t2);margin-left:2px}
+.albl{font-size:14px;color:var(--t2);margin-top:3px}
 
 input[type=range]{-webkit-appearance:none;width:100%;height:4px;border-radius:2px;background:var(--bd2);outline:none;cursor:pointer}
 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:17px;height:17px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 3px rgba(88,166,255,.2);cursor:pointer}
-.ticks{display:flex;justify-content:space-between;margin-top:5px;font-family:monospace;font-size:9px;color:var(--t3)}
+.ticks{display:flex;justify-content:space-between;margin-top:5px;font-family:monospace;font-size:12px;color:var(--t3)}
 
 /* 预设 */
 .pg{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
-.pbtn{background:var(--bg3);border:1px solid var(--bd);border-radius:6px;padding:5px 2px;color:var(--t2);font-family:monospace;font-size:11px;cursor:pointer;text-align:center;transition:.13s;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.pbtn{background:var(--bg3);border:1px solid var(--bd);border-radius:6px;padding:7px 2px;color:var(--t2);font-family:monospace;font-size:14px;cursor:pointer;text-align:center;transition:.13s;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 .pbtn:hover{border-color:var(--bd2);color:var(--t1);background:#2d333b}
 .pbtn.on{border-color:var(--blue2);color:var(--blue);background:rgba(31,111,235,.15)}
 
 /* 参考线 */
 .rlist{display:flex;flex-direction:column;gap:4px}
-.ritem{display:flex;align-items:center;gap:7px;padding:6px 9px;background:var(--bg3);border:1px solid var(--bd);border-radius:6px;cursor:pointer;transition:.13s;user-select:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.ritem{display:flex;align-items:center;gap:7px;padding:6px 9px;background:var(--bg3);border:1px solid var(--bd);border-radius:6px;transition:.13s;user-select:none;}
 .ritem:hover{border-color:var(--bd2)}
 .ritem.on{background:#1c2330;border-color:var(--bd2)}
-.rsw{width:20px;height:3px;border-radius:2px;flex-shrink:0}
-.rlbl{font-family:monospace;font-size:11px;color:var(--t2);flex:1}
+.rsw{width:20px;height:3px;border-radius:2px;flex-shrink:0;cursor:pointer}
+.rlbl{font-family:monospace;font-size:14px;color:var(--t2);flex:1;cursor:pointer}
 .ritem.on .rlbl{color:var(--t1)}
-.rtog{width:12px;height:12px;border-radius:50%;border:1.5px solid var(--t3);flex-shrink:0;position:relative;transition:.13s}
+.rtog{width:12px;height:12px;border-radius:50%;border:1.5px solid var(--t3);flex-shrink:0;position:relative;transition:.13s;cursor:pointer}
 .ritem.on .rtog{background:var(--blue);border-color:var(--blue)}
 .ritem.on .rtog::after{content:'';position:absolute;width:4px;height:4px;background:#fff;border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%)}
+.rdel{width:18px;height:18px;border-radius:4px;border:1px solid var(--bd);background:transparent;color:var(--t3);font-size:14px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.13s;padding:0}
+.rdel:hover{border-color:var(--red);color:var(--red);background:rgba(248,81,73,.1)}
+/* 添加区域 */
+.radd{display:flex;gap:5px;margin-top:6px;align-items:center}
+.radd-input{flex:1;background:var(--bg3);border:1px solid var(--bd);border-radius:6px;padding:6px 9px;color:var(--t1);font-family:monospace;font-size:14px;outline:none;min-width:0}
+.radd-input:focus{border-color:var(--blue2)}
+.radd-input::placeholder{color:var(--t3)}
+.radd-btn{background:var(--blue2);border:none;border-radius:6px;padding:6px 11px;color:#fff;font-family:monospace;font-size:14px;cursor:pointer;white-space:nowrap;transition:.13s;flex-shrink:0}
+.radd-btn:hover{background:#388bfd}
+.radd-hint{font-size:11px;color:var(--t3);margin-top:3px}
 
 /* 统计卡片 */
 .sg{display:grid;grid-template-columns:1fr 1fr;gap:5px}
 .sc{background:var(--bg3);border:1px solid var(--bd);border-radius:7px;padding:7px 9px}
 .sc.full{grid-column:1/-1}
-.scn{font-size:9px;color:var(--t3);line-height:1.5;margin-bottom:2px}
-.scv{font-family:monospace;font-size:14px;font-weight:500;color:var(--t1)}
+.scn{font-size:12px;color:var(--t3);line-height:1.5;margin-bottom:2px}
+.scv{font-family:monospace;font-size:17px;font-weight:500;color:var(--t1)}
 .scv.hi{color:var(--blue)}.scv.ok{color:var(--green)}.scv.warn{color:var(--amber)}.scv.danger{color:var(--red)}
-.scu{font-size:10px;color:var(--t2);margin-left:1px}
+.scu{font-size:13px;color:var(--t2);margin-left:1px}
 
 /* 公式框 */
-.fbox{background:var(--bg3);border:1px solid var(--bd);border-left:3px solid var(--blue2);border-radius:0 7px 7px 0;padding:9px 11px;font-family:monospace;font-size:11px;color:var(--t2);line-height:2}
-.fh{color:var(--blue)}.fd{font-size:9px;color:var(--t3)}
+.fbox{background:var(--bg3);border:1px solid var(--bd);border-left:3px solid var(--blue2);border-radius:0 7px 7px 0;padding:9px 11px;font-family:monospace;font-size:14px;color:var(--t2);line-height:2}
+.fh{color:var(--blue)}.fd{font-size:12px;color:var(--t3)}
 
 /* ── 图表区 ── */
 .charts{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
 .cpanel{flex:1;display:flex;flex-direction:column;border-bottom:1px solid var(--bd);padding:14px 20px 10px;min-height:0;position:relative}
 .cpanel:last-child{border-bottom:none}
 .cp-head{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:8px;flex-shrink:0}
-.cp-title{font-size:13px;font-weight:700;color:var(--t1)}
-.cp-desc{font-size:11px;color:var(--t2);margin-top:2px;line-height:1.5}
+.cp-title{font-size:16px;font-weight:700;color:var(--t1)}
+.cp-desc{font-size:13px;color:var(--t2);margin-top:2px;line-height:1.5}
 .leg-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.litem{display:flex;align-items:center;gap:5px;font-family:monospace;font-size:11px;color:var(--t2);white-space:nowrap}
+.litem{display:flex;align-items:center;gap:5px;font-family:monospace;font-size:13px;color:var(--t2);white-space:nowrap}
 .lline{display:inline-block;width:20px;height:2px;border-radius:1px;vertical-align:middle}
 .cw{flex:1;position:relative;min-height:0}
 canvas.cc{display:block;width:100%;height:100%}
 
 /* tooltip */
-.tt{position:absolute;background:#1c2330;border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:7px 11px;pointer-events:none;font-family:monospace;font-size:11px;color:var(--t1);display:none;z-index:20;min-width:165px;line-height:1.9}
-.tt-hd{font-size:10px;color:var(--t2);margin-bottom:3px;border-bottom:1px solid rgba(255,255,255,.07);padding-bottom:3px}
+.tt{position:absolute;background:#1c2330;border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:7px 11px;pointer-events:none;font-family:monospace;font-size:13px;color:var(--t1);display:none;z-index:20;min-width:165px;line-height:1.9}
+.tt-hd{font-size:12px;color:var(--t2);margin-bottom:3px;border-bottom:1px solid rgba(255,255,255,.07);padding-bottom:3px}
 .trow{display:flex;align-items:center;gap:5px}
 .tdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 
@@ -139,7 +149,7 @@ user-select: none
     </div>
     <div>
       <div class="hdr-title">单十字轴万向节运动特性分析工具</div>
-      <div class="hdr-sub">《汽车设计》第5版 · 第四章 4.3节 · 教材式(4-1)(4-3) · 转角范围 0°~720°（两圈）</div>
+      <div class="hdr-sub">《汽车设计》第6版 · 第四章 4.3节 · 教材式(4-1)(4-3) · 转角范围 0°~360°（一圈）</div>
     </div>
   </div>
   <div class="badge">完全离线 · 零依赖 · 浏览器运行</div>
@@ -179,20 +189,12 @@ user-select: none
 
     <div>
       <div class="stl">叠加参考曲线</div>
-      <div class="rlist" id="rl">
-        <div class="ritem on" data-a="5" >
-          <div class="rsw" style="background:#3fb950"></div><span class="rlbl">α = 5°</span><div class="rtog"></div>
-        </div>
-        <div class="ritem on" data-a="10">
-          <div class="rsw" style="background:#d29922"></div><span class="rlbl">α = 10°</span><div class="rtog"></div>
-        </div>
-        <div class="ritem on" data-a="18">
-          <div class="rsw" style="background:#39c5cf"></div><span class="rlbl">α = 18°（设计位置）</span><div class="rtog"></div>
-        </div>
-        <div class="ritem on" data-a="31">
-          <div class="rsw" style="background:#f85149"></div><span class="rlbl">α = 31°（最大跳动）</span><div class="rtog"></div>
-        </div>
+      <div class="rlist" id="rl"></div>
+      <div class="radd">
+        <input class="radd-input" id="radd-val" type="number" min="0" max="35" step="0.5" placeholder="输入角度 °">
+        <button class="radd-btn" id="radd-btn">＋ 添加</button>
       </div>
+      <div class="radd-hint">范围 0°~35°，支持小数</div>
     </div>
 
     <div>
@@ -268,96 +270,139 @@ user-select: none
 // 常量
 // ════════════════════════════════════════
 const PI = Math.PI, D2R = PI/180;
-const XMAX = 720;        // 0~720°（两圈）
-const STEP = 0.5;        // 每0.5°一个点，共1441点
+const XMAX = 360;
+const STEP = 0.5;
 const NPT  = Math.round(XMAX/STEP)+1;
 
-const REF_ANGLES = [5, 10, 18, 31];
-const REF_COLORS = ['#3fb950','#d29922','#39c5cf','#f85149'];
 const CUR_COLOR  = '#58a6ff';
 const GRID_C     = 'rgba(255,255,255,0.055)';
-const AXIS_C     = '#6e7681';
 const TICK_C     = '#8b949e';
-const ZERO_C     = 'rgba(255,255,255,0.20)';
 const DPR        = window.devicePixelRatio || 1;
 
-let curAlpha   = 15;
-let refVisible = [true, true, true, true];
+// ── 调色板：自动循环分配颜色
+const PALETTE = [
+  '#3fb950','#d29922','#39c5cf','#f85149','#bc8cff',
+  '#ff9500','#ff6b9d','#a8dadc','#e9c46a','#90e0ef'
+];
+let paletteIdx = 0;
+function nextColor(){ return PALETTE[paletteIdx++ % PALETTE.length]; }
+
+// ── 动态参考线数组：每项 { alpha, color, visible, series }
+let refLines = [];
+
+let curAlpha  = 15;
+let curSeries = null;
 
 // ════════════════════════════════════════
-// 核心计算（严格按MATLAB公式）
+// 核心计算
 // ════════════════════════════════════════
-// MATLAB原码：
-//   c = cosd(b)./(1-sind(b).^2.*sind(a).^2)   → ω₂/ω₁，注意是 sind(a)即sin(φ₁)
-//   d = (1-sind(b).^2.*sind(a).^2)./cosd(b)   → T₂/T₁
-//   a = 0:0.01:720 为主动叉转角（度）
-
 function computeSeries(alphaDeg) {
   const cosA = Math.cos(alphaDeg*D2R);
   const sinA = Math.sin(alphaDeg*D2R);
   const sin2A = sinA*sinA;
-
-  const xs=new Float32Array(NPT), yw=new Float32Array(NPT),
-        yt=new Float32Array(NPT);
-
+  const xs=new Float32Array(NPT), yw=new Float32Array(NPT), yt=new Float32Array(NPT);
   for(let i=0;i<NPT;i++){
-    const phi1d = i*STEP;
-    const phi1  = phi1d*D2R;
-    const sinPhi1 = Math.sin(phi1);
-    const sin2phi1 = sinPhi1*sinPhi1;
-
-    xs[i]  = phi1d;
-    yw[i]  = cosA / (1 - sin2A*sin2phi1);
-    yt[i]  = (1 - sin2A*sin2phi1) / cosA;
+    const phi1=i*STEP*D2R, s=Math.sin(phi1), s2=s*s;
+    xs[i]=i*STEP;
+    yw[i]=cosA/(1-sin2A*s2);
+    yt[i]=(1-sin2A*s2)/cosA;
   }
   return {xs,yw,yt};
 }
 
-// 预计算所有参考系列（只算一次）
-const refSeries = REF_ANGLES.map(a => computeSeries(a));
-let   curSeries = computeSeries(curAlpha);
+// ════════════════════════════════════════
+// 参考线管理
+// ════════════════════════════════════════
+function addRefLine(alphaDeg, visible=true){
+  // 防止重复
+  if(refLines.find(r=>Math.abs(r.alpha-alphaDeg)<0.01)) return false;
+  const color = nextColor();
+  const series = computeSeries(alphaDeg);
+  refLines.push({ alpha:alphaDeg, color, visible, series });
+  renderRefList();
+  buildAllLegends(curAlpha);
+  drawAll();
+  return true;
+}
+
+function removeRefLine(alpha){
+  refLines = refLines.filter(r=>Math.abs(r.alpha-alpha)>=0.01);
+  renderRefList();
+  buildAllLegends(curAlpha);
+  drawAll();
+}
+
+function toggleRefLine(alpha){
+  const r=refLines.find(r=>Math.abs(r.alpha-alpha)<0.01);
+  if(r){ r.visible=!r.visible; renderRefList(); buildAllLegends(curAlpha); drawAll(); }
+}
+
+function renderRefList(){
+  const ul=document.getElementById('rl');
+  if(refLines.length===0){
+    ul.innerHTML='<div style="font-size:12px;color:var(--t3);padding:4px 2px">暂无参考曲线，请在下方添加</div>';
+    return;
+  }
+  ul.innerHTML = refLines.map(r=>`
+    <div class="ritem ${r.visible?'on':''}" data-a="${r.alpha}">
+      <div class="rsw" style="background:${r.color}" data-tog="${r.alpha}"></div>
+      <span class="rlbl" data-tog="${r.alpha}">α = ${r.alpha % 1 === 0 ? r.alpha : r.alpha.toFixed(1)}°</span>
+      <div class="rtog" data-tog="${r.alpha}"></div>
+      <button class="rdel" data-del="${r.alpha}" title="删除">×</button>
+    </div>`).join('');
+}
+
+// 事件委托：点击切换或删除
+document.getElementById('rl').addEventListener('click',e=>{
+  const tog = e.target.dataset.tog;
+  const del = e.target.dataset.del;
+  if(del!==undefined) { removeRefLine(+del); return; }
+  // 点击行内任意位置（非删除按钮）切换显隐
+  const item = e.target.closest('.ritem');
+  if(item) toggleRefLine(+item.dataset.a);
+});
+
+// 添加按钮
+document.getElementById('radd-btn').addEventListener('click', ()=>{
+  const inp = document.getElementById('radd-val');
+  const v = parseFloat(inp.value);
+  if(isNaN(v)||v<0||v>35){ inp.style.borderColor='var(--red)'; setTimeout(()=>inp.style.borderColor='',1200); return; }
+  const ok = addRefLine(Math.round(v*10)/10);
+  if(!ok){ inp.style.borderColor='var(--amber)'; setTimeout(()=>inp.style.borderColor='',1200); }
+  else inp.value='';
+});
+document.getElementById('radd-val').addEventListener('keydown',e=>{ if(e.key==='Enter') document.getElementById('radd-btn').click(); });
 
 // ════════════════════════════════════════
 // Canvas 图表引擎
 // ════════════════════════════════════════
 const CHARTS = [
-  { id:'c0', wid:'cw0', ttid:'tt0', legid:'leg0', key:'yw',
-    ylabel:'ω₂/ω₁',
-    yfmt: v=>v.toFixed(5)
-  },
-  { id:'c1', wid:'cw1', ttid:'tt1', legid:'leg1', key:'yt',
-    ylabel:'T₂/T₁',
-    yfmt: v=>v.toFixed(5)
-  },
+  { id:'c0', wid:'cw0', ttid:'tt0', legid:'leg0', key:'yw', ylabel:'ω₂/ω₁', yfmt:v=>v.toFixed(5) },
+  { id:'c1', wid:'cw1', ttid:'tt1', legid:'leg1', key:'yt', ylabel:'T₂/T₁',  yfmt:v=>v.toFixed(5) },
 ];
 
-// ── Y轴范围：覆盖所有可见系列的实际数据范围，加10%余量，nice刻度
 function yRange(ci){
   const cfg=CHARTS[ci];
   let lo=Infinity, hi=-Infinity;
-  // 当前曲线
   curSeries[cfg.key].forEach(v=>{ if(v<lo)lo=v; if(v>hi)hi=v; });
-  // 可见参考线
-  REF_ANGLES.forEach((_,i)=>{
-    if(!refVisible[i]) return;
-    refSeries[i][cfg.key].forEach(v=>{ if(v<lo)lo=v; if(v>hi)hi=v; });
+  refLines.forEach(r=>{
+    if(!r.visible) return;
+    r.series[cfg.key].forEach(v=>{ if(v<lo)lo=v; if(v>hi)hi=v; });
   });
   if(lo===hi){ lo-=0.05; hi+=0.05; }
   const span=hi-lo;
   lo -= span*0.08; hi += span*0.08;
-  // nice 对齐到整数或0.1步
   const step = span>0.5 ? 0.1 : 0.02;
   lo = Math.floor(lo/step)*step;
   hi = Math.ceil(hi/step)*step;
   return {lo,hi};
 }
 
-// 绘制单张图
-function drawChart(ci, alpha){
-  const cfg =CHARTS[ci];
+function drawChart(ci){
+  const cfg=CHARTS[ci];
   const wrap=document.getElementById(cfg.wid);
-  const cv  =document.getElementById(cfg.id);
-  const W   =wrap.clientWidth, H=wrap.clientHeight;
+  const cv=document.getElementById(cfg.id);
+  const W=wrap.clientWidth, H=wrap.clientHeight;
   if(W<=0||H<=0) return;
 
   cv.width=W*DPR; cv.height=H*DPR;
@@ -365,170 +410,130 @@ function drawChart(ci, alpha){
   const ctx=cv.getContext('2d');
   ctx.scale(DPR,DPR);
 
-  const ml=66, mr=20, mt=18, mb=44;
+  const ml=66,mr=20,mt=18,mb=44;
   const pw=W-ml-mr, ph=H-mt-mb;
-
-  const {lo:ymin, hi:ymax} = yRange(ci);
-  const xmin=0, xmax=XMAX;
-  const yspan=ymax-ymin;
+  const {lo:ymin,hi:ymax}=yRange(ci);
+  const xmin=0, xmax=XMAX, yspan=ymax-ymin;
 
   function px(x){ return ml+(x-xmin)/(xmax-xmin)*pw; }
   function py(y){ return mt+(1-(y-ymin)/yspan)*ph; }
 
   ctx.clearRect(0,0,W,H);
+  ctx.fillStyle='rgba(0,0,0,0.18)'; ctx.fillRect(ml,mt,pw,ph);
 
-  // ── 绘图区背景（深一点）
-  ctx.fillStyle='rgba(0,0,0,0.18)';
-  ctx.fillRect(ml,mt,pw,ph);
-
-  // ── 垂直网格（每90°细线，每360°稍亮）
-  for(let x=0;x<=720;x+=90){
-    const cx=px(x);
-    const is360 = x%360===0;
-    ctx.strokeStyle = is360 ? 'rgba(255,255,255,0.12)' : GRID_C;
-    ctx.lineWidth   = is360 ? 1 : 0.7;
-    ctx.setLineDash([]);
+  // 垂直网格
+  for(let x=0;x<=360;x+=45){
+    const cx=px(x), is90=x%90===0;
+    ctx.strokeStyle=is90?'rgba(255,255,255,0.12)':GRID_C;
+    ctx.lineWidth=is90?1:0.7; ctx.setLineDash([]);
     ctx.beginPath(); ctx.moveTo(cx,mt); ctx.lineTo(cx,mt+ph); ctx.stroke();
   }
-
-  // ── 水平网格（8等分）
-  const YTICKS=8;
-  const yStep=yspan/YTICKS;
+  // 水平网格
+  const YTICKS=8, yStep=yspan/YTICKS;
   for(let i=0;i<=YTICKS;i++){
     const y=ymin+i*yStep, cy=py(y);
-    const isOne = Math.abs(y-1)<yStep*0.08;  // y≈1 的线
-    ctx.strokeStyle = isOne ? 'rgba(255,255,255,0.22)' : GRID_C;
-    ctx.lineWidth   = isOne ? 1 : 0.7;
-    ctx.setLineDash([]);
+    const isOne=Math.abs(y-1)<yStep*0.08;
+    ctx.strokeStyle=isOne?'rgba(255,255,255,0.22)':GRID_C;
+    ctx.lineWidth=isOne?1:0.7; ctx.setLineDash([]);
     ctx.beginPath(); ctx.moveTo(ml,cy); ctx.lineTo(ml+pw,cy); ctx.stroke();
   }
-
-  // ── y=1 醒目参考线
+  // y=1 参考线
   const cy1=py(1);
-  if(cy1>=mt-1 && cy1<=mt+ph+1){
-    ctx.strokeStyle='rgba(255,255,255,0.35)';
-    ctx.lineWidth=1.2; ctx.setLineDash([6,4]);
+  if(cy1>=mt-1&&cy1<=mt+ph+1){
+    ctx.strokeStyle='rgba(255,255,255,0.35)'; ctx.lineWidth=1.2; ctx.setLineDash([6,4]);
     ctx.beginPath(); ctx.moveTo(ml,cy1); ctx.lineTo(ml+pw,cy1); ctx.stroke();
     ctx.setLineDash([]);
-    // 标注"=1"
-    ctx.fillStyle='rgba(255,255,255,0.45)';
-    ctx.font='10px monospace'; ctx.textAlign='left';
-    ctx.fillText('= 1', ml+4, cy1-4);
+    ctx.fillStyle='rgba(255,255,255,0.45)'; ctx.font='12px monospace'; ctx.textAlign='left';
+    ctx.fillText('= 1',ml+4,cy1-4);
   }
 
-  // ── 参考曲线（虚线，稍细）
-  REF_ANGLES.forEach((a,i)=>{
-    if(!refVisible[i]) return;
-    const ser=refSeries[i], ys=ser[cfg.key];
-    ctx.strokeStyle=REF_COLORS[i]; ctx.lineWidth=1.4;
-    ctx.setLineDash([7,4]); ctx.globalAlpha=0.72;
+  // 参考曲线
+  refLines.forEach(r=>{
+    if(!r.visible) return;
+    const ys=r.series[cfg.key];
+    ctx.strokeStyle=r.color; ctx.lineWidth=1.4;
+    ctx.setLineDash([7,4]); ctx.globalAlpha=0.75;
     ctx.beginPath();
     for(let j=0;j<NPT;j++){
-      const cx=px(ser.xs[j]), cy=py(ys[j]);
+      const cx=px(r.series.xs[j]), cy=py(ys[j]);
       j===0?ctx.moveTo(cx,cy):ctx.lineTo(cx,cy);
     }
-    ctx.stroke();
-    ctx.setLineDash([]); ctx.globalAlpha=1;
+    ctx.stroke(); ctx.setLineDash([]); ctx.globalAlpha=1;
   });
 
-  // ── 当前曲线（实线，粗，带发光）
+  // 当前曲线
   {
-    const ser=curSeries, ys=ser[cfg.key];
-    // 发光底层
-    ctx.strokeStyle=CUR_COLOR; ctx.lineWidth=5;
-    ctx.globalAlpha=0.15; ctx.setLineDash([]);
+    const ys=curSeries[cfg.key];
+    ctx.strokeStyle=CUR_COLOR; ctx.lineWidth=5; ctx.globalAlpha=0.15; ctx.setLineDash([]);
     ctx.beginPath();
-    for(let j=0;j<NPT;j++){
-      const cx=px(ser.xs[j]), cy=py(ys[j]);
-      j===0?ctx.moveTo(cx,cy):ctx.lineTo(cx,cy);
-    }
+    for(let j=0;j<NPT;j++){ const cx=px(curSeries.xs[j]),cy=py(ys[j]); j===0?ctx.moveTo(cx,cy):ctx.lineTo(cx,cy); }
     ctx.stroke();
-    // 实线
     ctx.globalAlpha=1; ctx.lineWidth=2.4;
     ctx.beginPath();
-    for(let j=0;j<NPT;j++){
-      const cx=px(ser.xs[j]), cy=py(ys[j]);
-      j===0?ctx.moveTo(cx,cy):ctx.lineTo(cx,cy);
-    }
+    for(let j=0;j<NPT;j++){ const cx=px(curSeries.xs[j]),cy=py(ys[j]); j===0?ctx.moveTo(cx,cy):ctx.lineTo(cx,cy); }
     ctx.stroke();
-
-    // ── 峰值标注点（每90°处，即最大/最小值位置）
-    const annotXs=[90,270,450,630];  // ω₂/ω₁最大值在φ1=90°处
-    annotXs.forEach(xd=>{
-      const idx=Math.round(xd/STEP);
-      const yv=ys[idx];
+    // 峰值标注
+    [90,270].forEach(xd=>{
+      const idx=Math.round(xd/STEP), yv=ys[idx];
       const cx=px(xd), cy=py(yv);
-      // 小圆点
       ctx.fillStyle='#ffffff'; ctx.globalAlpha=0.9;
       ctx.beginPath(); ctx.arc(cx,cy,3.5,0,2*PI); ctx.fill();
-      ctx.globalAlpha=1;
-      // 数值标签
-      ctx.fillStyle=CUR_COLOR;
-      ctx.font='bold 11px monospace'; ctx.textAlign='center';
-      const label=yv.toFixed(3);
-      const above=(cy-mt)>20;
-      ctx.fillText(label, cx, cy+(above?-7:14));
+      ctx.globalAlpha=1; ctx.fillStyle=CUR_COLOR;
+      ctx.font='bold 13px monospace'; ctx.textAlign='center';
+      ctx.fillText(yv.toFixed(3),cx,cy+((cy-mt)>20?-7:14));
     });
   }
 
-  // ── 轴线（稍亮）
-  ctx.strokeStyle='rgba(255,255,255,0.22)'; ctx.lineWidth=1;
+  // 轴线
+  ctx.strokeStyle='rgba(255,255,255,0.22)'; ctx.lineWidth=1; ctx.setLineDash([]);
   ctx.beginPath();
-  ctx.moveTo(ml,mt); ctx.lineTo(ml,mt+ph);        // Y轴
-  ctx.moveTo(ml,mt+ph); ctx.lineTo(ml+pw,mt+ph);  // X轴底
+  ctx.moveTo(ml,mt); ctx.lineTo(ml,mt+ph);
+  ctx.moveTo(ml,mt+ph); ctx.lineTo(ml+pw,mt+ph);
   ctx.stroke();
 
-  // ── X轴刻度与标签
-  ctx.fillStyle=TICK_C; ctx.font='11px monospace'; ctx.textAlign='center';
-  [0,90,180,270,360,450,540,630,720].forEach(x=>{
+  // X刻度
+  ctx.fillStyle=TICK_C; ctx.font='13px monospace'; ctx.textAlign='center';
+  [0,45,90,135,180,225,270,315,360].forEach(x=>{
     const cx=px(x);
     ctx.strokeStyle='rgba(255,255,255,0.25)'; ctx.lineWidth=1;
     ctx.beginPath(); ctx.moveTo(cx,mt+ph); ctx.lineTo(cx,mt+ph+5); ctx.stroke();
-    ctx.fillStyle=TICK_C;
-    ctx.fillText(x+'°', cx, mt+ph+17);
+    ctx.fillStyle=TICK_C; ctx.fillText(x+'°',cx,mt+ph+17);
   });
-  // 360°/720° 特殊标注（第一圈/第二圈）
-  ctx.fillStyle='rgba(255,255,255,0.28)'; ctx.font='9px monospace';
-  ctx.fillText('第一圈', px(180), mt+ph+30);
-  ctx.fillText('第二圈', px(540), mt+ph+30);
 
-  // ── Y轴刻度与标签（8等分）
+  // Y刻度
   ctx.textAlign='right';
   for(let i=0;i<=YTICKS;i++){
     const y=ymin+i*yStep, cy=py(y);
     if(cy<mt-1||cy>mt+ph+1) continue;
     ctx.strokeStyle='rgba(255,255,255,0.22)'; ctx.lineWidth=1;
     ctx.beginPath(); ctx.moveTo(ml-5,cy); ctx.lineTo(ml,cy); ctx.stroke();
-    ctx.fillStyle=TICK_C; ctx.font='11px monospace';
-    ctx.fillText(y.toFixed(3), ml-8, cy+4);
+    ctx.fillStyle=TICK_C; ctx.font='13px monospace';
+    ctx.fillText(y.toFixed(3),ml-8,cy+4);
   }
 
-  // ── 轴标题
+  // 轴标题
   ctx.fillStyle='rgba(255,255,255,0.55)'; ctx.textAlign='center';
-  ctx.font='12px "Microsoft YaHei",sans-serif';
-  ctx.fillText('主动轴转角  φ₁ / °', ml+pw/2, H-6);
-  ctx.save(); ctx.translate(14, mt+ph/2); ctx.rotate(-PI/2);
-  ctx.fillText(cfg.ylabel, 0, 0); ctx.restore();
+  ctx.font='14px "Microsoft YaHei",sans-serif';
+  ctx.fillText('主动轴转角  φ₁ / °',ml+pw/2,H-6);
+  ctx.save(); ctx.translate(14,mt+ph/2); ctx.rotate(-PI/2);
+  ctx.font='14px "Microsoft YaHei",sans-serif';
+  ctx.fillText(cfg.ylabel,0,0); ctx.restore();
 
-  // 存储映射信息（供tooltip用）
   cv._map={ml,mr,mt,mb,pw,ph,px,py,xmin,xmax,ymin,ymax,W,H,key:cfg.key};
 }
 
-// 绘制所有图
-function drawAll(){
-  for(let i=0;i<2;i++) drawChart(i, curAlpha);
-}
+function drawAll(){ for(let i=0;i<2;i++) drawChart(i); }
 
 // ════════════════════════════════════════
 // 图例
 // ════════════════════════════════════════
-function buildLegend(ci, alpha){
+function buildLegend(ci,alpha){
   const el=document.getElementById(CHARTS[ci].legid);
-  const dashStyle=(c)=>`background:repeating-linear-gradient(90deg,${c} 0,${c} 4px,transparent 4px,transparent 7px)`;
+  const dash=(c)=>`background:repeating-linear-gradient(90deg,${c} 0,${c} 4px,transparent 4px,transparent 7px)`;
   let html=`<div class="litem"><span class="lline" style="background:${CUR_COLOR};height:3px"></span>α = ${alpha}°（当前）</div>`;
-  REF_ANGLES.forEach((a,i)=>{
-    if(!refVisible[i]) return;
-    html+=`<div class="litem"><span class="lline" style="${dashStyle(REF_COLORS[i])};height:2px"></span>α = ${a}°</div>`;
+  refLines.forEach(r=>{
+    if(!r.visible) return;
+    html+=`<div class="litem"><span class="lline" style="${dash(r.color)};height:2px"></span>α = ${r.alpha%1===0?r.alpha:r.alpha.toFixed(1)}°</div>`;
   });
   el.innerHTML=html;
 }
@@ -538,18 +543,13 @@ function buildAllLegends(alpha){ for(let i=0;i<2;i++) buildLegend(i,alpha); }
 // 统计
 // ════════════════════════════════════════
 function updateStats(alpha){
-  const a=alpha*D2R;
-  const cosA=Math.cos(a), sinA=Math.sin(a);
-  const K    = sinA*Math.tan(a);
-  const wMax = cosA===0 ? 9999 : cosA/(1-sinA*sinA);  // φ₁=90°
-  const wMin = cosA;                                    // φ₁=0°
-  const tMax = cosA===0 ? 9999 : 1/cosA;               // φ₁=90°
-  const tMin = cosA;                                    // φ₁=0°
-
+  const a=alpha*D2R, cosA=Math.cos(a), sinA=Math.sin(a);
+  const K=sinA*Math.tan(a);
+  const wMax=cosA===0?9999:cosA/(1-sinA*sinA);
+  const wMin=cosA, tMax=cosA===0?9999:1/cosA, tMin=cosA;
   const kEl=document.getElementById('sv-k');
   kEl.textContent=K.toFixed(5);
   kEl.className='scv '+(K<0.02?'ok':K<0.05?'warn':'danger');
-
   document.getElementById('sv-wmax').textContent=wMax.toFixed(5);
   document.getElementById('sv-wmin').textContent=wMin.toFixed(5);
   document.getElementById('sv-tmax').textContent=tMax.toFixed(5);
@@ -557,19 +557,13 @@ function updateStats(alpha){
 }
 
 // ════════════════════════════════════════
-// Tooltip（悬停读值）
+// Tooltip
 // ════════════════════════════════════════
 function setupTooltip(ci){
   const cfg=CHARTS[ci];
-  const cv =document.getElementById(cfg.id);
-  const tt =document.getElementById(cfg.ttid);
+  const cv=document.getElementById(cfg.id);
+  const tt=document.getElementById(cfg.ttid);
   const wrap=document.getElementById(cfg.wid);
-
-  function getVal(ser, x01){
-    const idx=Math.round(x01*(NPT-1));
-    const i=Math.max(0,Math.min(NPT-1,idx));
-    return ser[cfg.key][i];
-  }
 
   cv.addEventListener('mousemove',e=>{
     const m=cv._map; if(!m) return;
@@ -578,20 +572,18 @@ function setupTooltip(ci){
     if(mx<m.ml||mx>m.ml+m.pw||my<m.mt||my>m.mt+m.ph){ tt.style.display='none'; return; }
     const x01=(mx-m.ml)/m.pw;
     const xVal=x01*(m.xmax-m.xmin)+m.xmin;
+    const idx=Math.max(0,Math.min(NPT-1,Math.round(x01*(NPT-1))));
 
     let html=`<div class="tt-hd">φ₁ = ${xVal.toFixed(1)}°</div>`;
-    const yCur=getVal(curSeries,x01);
-    html+=`<div class="trow"><div class="tdot" style="background:${CUR_COLOR}"></div>α = ${curAlpha}°：<b>${cfg.yfmt(yCur)}</b></div>`;
-    REF_ANGLES.forEach((a,i)=>{
-      if(!refVisible[i]) return;
-      const y=getVal(refSeries[i],x01);
-      html+=`<div class="trow"><div class="tdot" style="background:${REF_COLORS[i]}"></div>α = ${a}°：${cfg.yfmt(y)}</div>`;
+    html+=`<div class="trow"><div class="tdot" style="background:${CUR_COLOR}"></div>α = ${curAlpha}°：<b>${cfg.yfmt(curSeries[cfg.key][idx])}</b></div>`;
+    refLines.forEach(r=>{
+      if(!r.visible) return;
+      html+=`<div class="trow"><div class="tdot" style="background:${r.color}"></div>α = ${r.alpha%1===0?r.alpha:r.alpha.toFixed(1)}°：${cfg.yfmt(r.series[cfg.key][idx])}</div>`;
     });
     tt.innerHTML=html;
 
     const wRect=wrap.getBoundingClientRect();
-    const tx=e.clientX-wRect.left+12, ty=e.clientY-wRect.top-40;
-    const ttW=180;
+    const tx=e.clientX-wRect.left+12, ty=e.clientY-wRect.top-40, ttW=185;
     tt.style.left=(tx+ttW>wRect.width-10?tx-ttW-18:tx)+'px';
     tt.style.top=Math.max(2,ty)+'px';
     tt.style.display='block';
@@ -620,34 +612,23 @@ document.getElementById('sl').addEventListener('input',e=>update(+e.target.value
 document.getElementById('pg').addEventListener('click',e=>{
   const b=e.target.closest('.pbtn'); if(b) update(+b.dataset.v);
 });
-document.getElementById('rl').addEventListener('click',e=>{
-  const item=e.target.closest('.ritem'); if(!item) return;
-  const idx=REF_ANGLES.indexOf(+item.dataset.a); if(idx<0) return;
-  refVisible[idx]=!refVisible[idx];
-  item.classList.toggle('on',refVisible[idx]);
-  buildAllLegends(curAlpha); drawAll();
-});
 window.addEventListener('resize',()=>{ drawAll(); });
 
 // ════════════════════════════════════════
 // 初始化
 // ════════════════════════════════════════
 for(let i=0;i<2;i++) setupTooltip(i);
-// 等DOM渲染完成再绘图
+// 预置4条默认参考线
+[5, 10, 18, 31].forEach(a => addRefLine(a));
 requestAnimationFrame(()=>{
-  requestAnimationFrame(()=>{
-    update(15);
-  });
+  requestAnimationFrame(()=>{ update(15); });
 });
 </script>
 <script>
-// 阻止双击缩放（移动端兼容优化）
 let lastTouchEnd = 0;
 document.addEventListener('touchend', function(e) {
   const now = Date.now();
-  if (now - lastTouchEnd <= 300) {
-    e.preventDefault();
-  }
+  if (now - lastTouchEnd <= 300) e.preventDefault();
   lastTouchEnd = now;
 }, false);
 document.addEventListener('contextmenu', e => e.preventDefault());
